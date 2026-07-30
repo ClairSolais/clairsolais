@@ -175,17 +175,18 @@
         height: 100%;
         object-fit: cover;
         object-position: center; 
-        opacity: 1; /* Ya no son opacas, muestran su color real siempre */
+        opacity: 1; 
         transition: transform 0.8s ease; 
     }
 
-    /* Redujimos la expansión de 3.5 a 2 para un efecto más controlado */
+    /* Expansión ultra sutil: solo aumenta a 1.5 en lugar de 2 */
     .gallery-track:hover .gallery-card:hover {
-        flex: 2; 
+        flex: 1.5; 
     }
 
+    /* Zoom de imagen casi imperceptible (2%) */
     .gallery-card:hover img {
-        transform: scale(1.05); 
+        transform: scale(1.02); 
     }
 
     .card-label {
