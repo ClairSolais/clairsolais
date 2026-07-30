@@ -25,6 +25,7 @@
         overflow-x: hidden;
     }
 
+    /* Fondo principal claro con cuadrícula técnica */
     .bg-pattern {
         position: fixed;
         top: 0; left: 0; width: 100%; height: 100%;
@@ -62,11 +63,27 @@
     }
     .loading-indicator span { font-size: 10px; display: block; color: var(--text-gray); }
 
-    /* --- CABECERA CENTRADA --- */
+    /* --- ANIMACIÓN DE GLITCH (Flicker) --- */
+    @keyframes cyber-glitch {
+        0% { opacity: 1; transform: translate(0); text-shadow: none; }
+        2% { opacity: 0.8; transform: translate(-2px, 1px); text-shadow: 2px 0 var(--clair-yellow); }
+        4% { opacity: 1; transform: translate(0); text-shadow: none; }
+        45% { opacity: 1; }
+        46% { opacity: 0.9; transform: translate(1px, -1px); }
+        47% { opacity: 1; transform: translate(0); }
+        100% { opacity: 1; }
+    }
+
+    .glitch-text {
+        animation: cyber-glitch 6s infinite;
+        display: inline-block;
+    }
+
+    /* --- CABECERA NEGRA CON TEXTURA ENDFIELD --- */
     header {
-        background-color: rgba(10, 10, 10, 0.75); 
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        background-color: var(--text-black); 
+        /* Textura topográfica/hash militar */
+        background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 8px);
         padding: 35px 20px; 
         border-bottom: 2px solid var(--clair-yellow);
         position: sticky; 
@@ -179,12 +196,10 @@
         transition: transform 0.8s ease; 
     }
 
-    /* Expansión ultra sutil: solo aumenta a 1.5 en lugar de 2 */
     .gallery-track:hover .gallery-card:hover {
         flex: 1.5; 
     }
 
-    /* Zoom de imagen casi imperceptible (2%) */
     .gallery-card:hover img {
         transform: scale(1.02); 
     }
@@ -279,48 +294,56 @@
         color: var(--text-black);
     }
 
+    /* --- NUEVOS BOTONES ESTILO ENDFIELD UI --- */
     .about-buttons {
         margin-top: 40px;
         display: flex;
         align-items: center;
         gap: 15px;
+        flex-wrap: wrap;
     }
 
-    .social-btn {
-        background-color: var(--clair-yellow);
-        color: var(--text-black);
-        padding: 10px 20px;
-        text-decoration: none;
-        font-weight: 700;
-        letter-spacing: 1px;
-        border: 2px solid var(--text-black);
-        transition: all 0.3s ease;
-    }
-
-    .social-btn:hover {
-        background-color: var(--text-black);
-        color: var(--clair-yellow);
-        transform: translateY(-3px);
-        box-shadow: 4px 4px 0px var(--clair-yellow);
-    }
-
-    .contact-btn {
-        background-color: var(--text-black);
+    .endfield-btn {
+        background-color: #222222; /* Gris muy oscuro casi negro */
         color: var(--bg-white);
-        padding: 10px 30px;
+        padding: 12px 24px;
         text-decoration: none;
+        font-family: 'Rajdhani', sans-serif;
         font-weight: 700;
-        letter-spacing: 2px;
+        font-size: 1rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        border-left: 4px solid var(--clair-yellow); /* Barra indicadora amarilla */
+        /* Textura topográfica dentro del botón */
+        background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.03) 0, rgba(255,255,255,0.03) 1px, transparent 1px, transparent 6px);
+        transition: all 0.3s ease;
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .endfield-btn:hover {
+        background-color: #333333;
+        color: var(--clair-yellow);
+        box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+    }
+
+    /* Icono de flecha tipo > al pasar el ratón */
+    .endfield-btn::after {
+        content: '>';
+        color: var(--clair-yellow);
+        opacity: 0;
+        transform: translateX(-10px);
         transition: all 0.3s ease;
     }
 
-    .contact-btn:hover {
-        background-color: var(--clair-yellow);
-        color: var(--text-black);
-        border: 2px solid var(--text-black);
+    .endfield-btn:hover::after {
+        opacity: 1;
+        transform: translateX(0);
     }
 
-    /* Contenedor de la imagen sin marcos ni fondo */
     .about-image {
         flex: 1;
         height: 600px;
@@ -330,7 +353,6 @@
         justify-content: center;
     }
 
-    /* Uso de contain para que la imagen no se recorte y mantenga su proporción */
     .about-image img {
         width: 100%;
         height: 100%;
@@ -353,6 +375,8 @@
     footer {
         padding: 50px 20px;
         background-color: var(--text-black);
+        /* Misma textura del header para coherencia */
+        background-image: repeating-linear-gradient(-45deg, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 8px);
         color: var(--bg-white);
         text-align: center;
         border-top: 4px solid var(--clair-yellow);
@@ -367,19 +391,9 @@
 
     /* --- RESPONSIVO --- */
     @media (max-width: 900px) {
-        .about-section {
-            flex-direction: column;
-            text-align: center;
-            gap: 40px;
-        }
-        .about-buttons {
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        .about-image {
-            width: 100%;
-            height: 400px;
-        }
+        .about-section { flex-direction: column; text-align: center; gap: 40px; }
+        .about-buttons { justify-content: center; }
+        .about-image { width: 100%; height: 400px; }
     }
 
     @media (max-width: 768px) {
@@ -387,15 +401,8 @@
         nav { gap: 8px; }
         header { padding: 25px 15px; }
         .logo-container h1 { font-size: 2.2rem; }
-        
-        .gallery-track {
-            flex-direction: column;
-            height: 800px;
-        }
-        .gallery-card {
-            border-right: none;
-            border-bottom: 2px solid var(--text-black);
-        }
+        .gallery-track { flex-direction: column; height: 800px; }
+        .gallery-card { border-right: none; border-bottom: 2px solid var(--text-black); }
         .gallery-card:last-child { border-bottom: none; }
         .about-text h2 { font-size: 3rem; }
     }
@@ -406,7 +413,7 @@
     <div class="bg-pattern"></div>
     <div class="side-accent"></div>
     
-    <div class="loading-indicator">
+    <div class="loading-indicator glitch-text">
         95%
         <span>[ SYSTEM ONLINE ]</span>
     </div>
@@ -414,7 +421,8 @@
     <header id="home">
         <div class="header-inner">
             <div class="logo-container">
-                <h1>CLAIRSOLAIS</h1>
+                <!-- Se agregó la clase glitch-text -->
+                <h1 class="glitch-text">CLAIRSOLAIS</h1>
                 <p>ILLUSTRATION ◈ FREELANCER</p>
             </div>
             <nav>
@@ -466,19 +474,21 @@
 
     <section class="about-section" id="about">
         <div class="about-text">
-            <h2>About Me</h2>
+            <!-- Glitch sutil en el About Me -->
+            <h2 class="glitch-text">About Me</h2>
             <p>An <strong>illustrator</strong> known for blending elegant gothic aesthetics with modern tech-wear designs. Specializing in high-quality character design, full illustrations, and visual development.</p>
             <p>Currently accepting commissions and bringing unique concepts to life through meticulous details and striking color palettes.</p>
             
             <div class="about-buttons">
-                <a href="#" class="social-btn">TWITTER</a>
-                <a href="#" class="social-btn">VGEN</a>
-                <a href="mailto:tu-correo@gmail.com" class="contact-btn">✉ CONTACT</a>
+                <!-- Nuevos botones Endfield -->
+                <a href="#" class="endfield-btn">TWITTER / X</a>
+                <a href="https://vgen.co/ClairSolais" target="_blank" class="endfield-btn">VGEN PORTFOLIO</a>
+                <a href="mailto:tu-correo@gmail.com" class="endfield-btn">CONTACT</a>
             </div>
         </div>
         
         <div class="about-image">
-            <div class="image-tag">ID: AVATAR_01</div>
+            <div class="image-tag glitch-text">ID: AVATAR_01</div>
             <img src="assets/GaJOZvOb0AEOkA8.jpg" alt="ClairSolais Avatar">
         </div>
     </section>
